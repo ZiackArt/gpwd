@@ -93,7 +93,7 @@ def main():
     argumentList = sys.argv[1:]
     # Options
     options = "hacwk:o:v"
-    long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key=","Version"]
+    long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key","Version"]
 
     try: 
         # Parsing argument
