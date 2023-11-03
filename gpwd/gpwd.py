@@ -5,6 +5,8 @@ numbers_list = [0,1,2,3,4,5,6,7,8,9]
 Output = False
 key = 4
 With_replacement = False
+module_name = "Gpwd: Generate a list of a lots of passwords"
+__version__ = "0.1"
 
 def Arrangement(numbers_list=numbers_list, with_replacement=With_replacement,key=key,output=Output ):
     outputs = []
@@ -57,8 +59,8 @@ def main():
     # list of command line arguments
     argumentList = sys.argv[1:]
     # Options
-    options = "hacwk:o"
-    long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key="]
+    options = "hacwk:ov"
+    long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key=","Version"]
 
     try: 
         # Parsing argument
@@ -84,6 +86,8 @@ def main():
                 key = int(currentValue)
             elif currentArgument in ("-o", "--Output"):
                 Output = True
+            elif currentArgument in ("-v", "Version"):
+                print(f"{module_name} \nVersion: {__version__}")
         
         if Oparation == "Arrangement":
             print("Wating....")
