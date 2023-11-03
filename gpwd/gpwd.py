@@ -39,41 +39,42 @@ key = 4
 With_replacement = False
 module_name = "Gpwd: Generate a list of a lots of passwords"
 __version__ = "0.1"
+Filename = "gpwd.txt"
 
-def Arrangement(numbers_list=numbers_list, with_replacement=With_replacement,key=key,output=Output ):
+def Arrangement(numbers_list=numbers_list, with_replacement=With_replacement,key=key,output=Output,filename=Filename):
     outputs = []
     if with_replacement:
         [outputs.append(list(p)) for p in product(numbers_list,repeat=key)]
     else:
         [outputs.append(list(p)) for p in permutations(numbers_list,key)]
 
-    if output:
-        Output_f(outputs)
-        Show(outputs)
-    else:
-        Show(outputs)
+    gpwd_call_function(output=output,filename=filename,outputs=outputs)
 
-def Combinaition(numbers_list=numbers_list, with_replacement=With_replacement,key=key,output=Output ):
+def Combinaition(numbers_list=numbers_list, with_replacement=With_replacement,key=key,output=Output,filename=Filename):
     outputs = []
     if with_replacement:
         [outputs.append(list(c)) for c in combinations_with_replacement(numbers_list,key)]
     else:
         [outputs.append(list(c)) for c in combinations(numbers_list,key)]
     
+    gpwd_call_function(output=output,filename=filename,outputs=outputs)
+   
+
+def gpwd_call_function(output=Output,filename=Filename,outputs=None):
     if output:
-        Output_f(outputs)
-        Show(outputs)
+        Output_f(outputs,filename=filename)
+        # Show(outputs)
     else:
         Show(outputs)
 
-def Output_f(outputs):
+def Output_f(outputs,filename=Filename):
     try:
-        file = open("Gpwd.txt","a")
+        file = open(filename,"a")
         file.write(f"======================================SIZE {len(outputs)}======================================\n")
         for  output in outputs:
             file.write(str(output)+"\n")
         file.close()
-        print("=======END=======")
+        print("___________END___________")
     except:
         print("=======Opening fille error=======")
 
@@ -84,14 +85,14 @@ def Show(outputs):
 
 def main():
     
-    global With_replacement, key, Output
+    global With_replacement, key, Output, Filename
     Oparation = ""
     argumentList = sys.argv[1:]
     # Remove 1st argument from the
     # list of command line arguments
     argumentList = sys.argv[1:]
     # Options
-    options = "hacwk:ov"
+    options = "hacwk:o:v"
     long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key=","Version"]
 
     try: 
@@ -104,7 +105,7 @@ def main():
 
     try:
         for currentArgument, currentValue in arguments:
-            
+            # print(currentArgument,currentValue)
             if currentArgument in ('-h',"--Help"):
                 print (helps)
             elif currentArgument in ("-a","--Arrangement"):
@@ -117,17 +118,21 @@ def main():
                 key = int(currentValue)
             elif currentArgument in ("-o", "--Output"):
                 Output = True
+                Filename = str(currentValue) if len(currentValue) >= 5 else Filename
             elif currentArgument in ("-v", "Version"):
                 print(f"{module_name} \nVersion: {__version__}")
         
         if Oparation == "Arrangement":
             print("Wating....")
-            Arrangement(with_replacement=With_replacement,key=key,output=Output)
+            Arrangement(with_replacement=With_replacement,key=key,output=Output,filename=Filename)
         elif Oparation == "Combinaition":
             print("Wating....")
-            Combinaition(with_replacement=With_replacement,key=key,output=Output)
-    except:
-        print("ERREUR INCONU")
+            Combinaition(with_replacement=With_replacement,key=key,output=Output,filename=Filename)
+    except getopt.error as err:
+        if err:
+            print(str(err))
+        else:
+            print("ERREUR INCONU")
     
 if __name__ == "__main__":
     main()
