@@ -91,6 +91,11 @@ def main():
     # Remove 1st argument from the
     # list of command line arguments
     argumentList = sys.argv[1:]
+
+    if len(argumentList) == 0:
+        print(f"{module_name} \nVersion: {__version__}")
+        sys.exit()
+
     # Options
     options = "hacwk:o:v"
     long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key","Version"]
@@ -98,6 +103,7 @@ def main():
     try: 
         # Parsing argument
         arguments, values = getopt.getopt(argumentList,options,long_options)
+    
     except getopt.error as err:
         # output error, and return with an error code
         print (str(err))
