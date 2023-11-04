@@ -63,7 +63,7 @@ def Combinaition(numbers_list=numbers_list, with_replacement=With_replacement,ke
 def gpwd_call_function(output=Output,filename=Filename,outputs=None):
     if output:
         Output_f(outputs,filename=filename)
-        Show(outputs)
+        # Show(outputs)
     else:
         Show(outputs)
 
