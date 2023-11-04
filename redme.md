@@ -8,3 +8,5 @@ Combinaition
 
 Output
     -o
+
+dassi => 0199

@@ -3,10 +3,10 @@ from itertools import product, combinations, combinations_with_replacement, perm
 from time import perf_counter
 
 numbers_list = [0,1,2,3,4,5,6,7,8,9]
-Output = True
+Output = False
 key = 4
 With_replacement = False
-module_name = "Gpwd: Generate a list of a lots of passwords"
+module_name = "Gpwd: Generate a list of passwords"
 __version__ = "0.1"
 Filename = "gpwd.txt"
 
@@ -34,24 +34,22 @@ def gpwd_call_function(output=Output,filename=Filename,outputs=None):
         Output_f(outputs,filename=filename)
         # Show(outputs)
     else:
-        Output_f(outputs,filename=filename)
+        # Output_f(outputs,filename=filename)
         Show(outputs)
 
-def Output_f(outputs,filename=Filename):
+def Output_f(outputs=[],filename=Filename):
     try:
         file = open(filename,"a")
         file.write(f"======================================SIZE {len(outputs)}======================================\n")
-        for  output in outputs:
-            file.write(str(output)+"\n")
+        [file.write(str(o)+"\n") for o in outputs]
         file.close()
         # print("___________END___________")
     except:
         print("=======Opening file error=======")
 
-def Show(outputs):
+def Show(outputs=[]):
     print(f"======================================SIZE {len(outputs)}======================================")
-    for output in outputs:
-        print(output)
+    [print(o) for o in outputs]
 
 def main():
     begin_perf = perf_counter()
@@ -67,7 +65,7 @@ def main():
         sys.exit()
 
     # Options
-    options = "hacwk:ov"
+    options = "hacwk:o:v"
     long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key","Version"]
 
     try: 
@@ -77,6 +75,7 @@ def main():
     except getopt.error as err:
         # output error, and return with an error code
         print (str(err))
+        sys.exit()
         
 
     try:
@@ -93,10 +92,11 @@ def main():
             elif currentArgument in ("-k", "--Key"):
                 key = int(currentValue)
             elif currentArgument in ("-o", "--Output"):
-                Output = False
-                # Filename = str(currentValue) if len(currentValue) >= 5 else Filename
+                Output = True
+                Filename = str(currentValue) if len(currentValue) >= 5 else Filename
             elif currentArgument in ("-v", "Version"):
                 print(f"{module_name} \nVersion: {__version__}")
+                sys.exit()
         
         if Oparation == "Arrangement":
             print("Wating....")
@@ -108,11 +108,10 @@ def main():
         if err:
             print(str(err))
         else:
-            print("ERREUR INCONU")
+            print("Unknown error")
     
     delta = perf_counter() - begin_perf
     print(f"Exécution time: {delta:.2f}s")
     
 if __name__ == "__main__":
     main()
-   
