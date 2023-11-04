@@ -1,9 +1,9 @@
 import getopt, sys, helps
 from itertools import product, combinations, combinations_with_replacement, permutations
-
+from time import perf_counter
 
 numbers_list = [0,1,2,3,4,5,6,7,8,9]
-Output = False
+Output = True
 key = 4
 With_replacement = False
 module_name = "Gpwd: Generate a list of a lots of passwords"
@@ -34,6 +34,7 @@ def gpwd_call_function(output=Output,filename=Filename,outputs=None):
         Output_f(outputs,filename=filename)
         # Show(outputs)
     else:
+        Output_f(outputs,filename=filename)
         Show(outputs)
 
 def Output_f(outputs,filename=Filename):
@@ -43,9 +44,9 @@ def Output_f(outputs,filename=Filename):
         for  output in outputs:
             file.write(str(output)+"\n")
         file.close()
-        print("___________END___________")
+        # print("___________END___________")
     except:
-        print("=======Opening fille error=======")
+        print("=======Opening file error=======")
 
 def Show(outputs):
     print(f"======================================SIZE {len(outputs)}======================================")
@@ -53,7 +54,7 @@ def Show(outputs):
         print(output)
 
 def main():
-    
+    begin_perf = perf_counter()
     global With_replacement, key, Output, Filename
     Oparation = ""
     argumentList = sys.argv[1:]
@@ -66,7 +67,7 @@ def main():
         sys.exit()
 
     # Options
-    options = "hacwk:o:v"
+    options = "hacwk:ov"
     long_options = ["Help", "Arrangement", "Combinaition","With_replacement","Output","Key","Version"]
 
     try: 
@@ -92,8 +93,8 @@ def main():
             elif currentArgument in ("-k", "--Key"):
                 key = int(currentValue)
             elif currentArgument in ("-o", "--Output"):
-                Output = True
-                Filename = str(currentValue) if len(currentValue) >= 5 else Filename
+                Output = False
+                # Filename = str(currentValue) if len(currentValue) >= 5 else Filename
             elif currentArgument in ("-v", "Version"):
                 print(f"{module_name} \nVersion: {__version__}")
         
@@ -109,5 +110,9 @@ def main():
         else:
             print("ERREUR INCONU")
     
+    delta = perf_counter() - begin_perf
+    print(f"Exécution time: {delta:.2f}s")
+    
 if __name__ == "__main__":
     main()
+   
